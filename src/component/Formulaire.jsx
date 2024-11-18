@@ -15,7 +15,7 @@ export const Formulaire = () => {
     useEffect(() => {
         setBtnCanSubmit(canSubmit(formFields))
     }, [formFields]);
-    console.log(btnCanSubmit)
+    // console.log(btnCanSubmit)
 
     return (
         <form className={"bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6 "} onSubmit={
@@ -23,7 +23,7 @@ export const Formulaire = () => {
                 e.preventDefault();
                 const errors = formErrors(formFields);
                 if (!isEmpty((errors))){
-                    console.log(errors)
+                    console.error(errors)
                     return false;
                 }
                 console.log('save')
