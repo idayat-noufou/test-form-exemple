@@ -19,7 +19,8 @@
     "jsdoc": "^4.0.4",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

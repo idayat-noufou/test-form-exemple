@@ -1,6 +1,6 @@
 import './App.css';
-import {Formulaire} from "./component/Formulaire";
-import {RegisteredList} from "./component/RegisteredList";
+import {Formulaire} from "./component/Formulaire/Formulaire.jsx";
+import {RegisteredList} from "./component/RegisteredList/RegisteredList.jsx";
 
 
 
@@ -9,7 +9,7 @@ function App() {
         <div className="App min-h-screen p-6 bg-gray-100">
             {/*nom, prénom, mail, date de naissance, ville, code postal et un bouton de sauvegarde*/}
             <div>
-                <h2>Inscription</h2><br/>
+                <h2 data-testid="inscription">Inscription</h2><br/>
                 <div className={"container max-w-screen-lg mx-auto"}>
                     <Formulaire/>
                 </div>

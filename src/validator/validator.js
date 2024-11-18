@@ -1,4 +1,5 @@
 import {isEmpty, forEach} from "lodash";
+import log from "eslint-plugin-react/lib/util/log.js";
 
 /**
  * Verify if text field is valid
@@ -23,18 +24,19 @@ function textIsValid(text) {
  */
 function hasSpecialCharacters(text) {
     const format = /[ `!@#$%^&*()+=\[\]{};':"\\|,.<>\/?~0-9]/;
-    return text.exec(format)
+    return format.exec(text)
 }
 
 /**
  * Calculate a person age
- * @param {Date} date bithdate
+ * @param {string} date bithdate
  * @returns {number} The age in years
  */
 function calculateAge(date) {
     if (isEmpty(date)) {
         throw new Error("value is empty");
     }
+    date = new Date(date)
     if (!(date instanceof Date) || isNaN(date)) {
         throw new Error("date format not valid");
     }
@@ -66,7 +68,7 @@ function dateIsValid(date) {
  */
 function emailIsValid(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email.test(emailRegex)) {
+    if (!emailRegex.test(email)) {
         throw new Error("email is not valid")
     }
     return true
@@ -78,7 +80,7 @@ function emailIsValid(email) {
  */
 function postalCodeisValid(code) {
     const format = /^[0-9]{5}$/;
-    if (!code.test(format)) {
+    if (!format.test(code)) {
         throw new Error("postal code is not valid")
     }
 }
@@ -98,6 +100,17 @@ function canSubmit(form) {
     return submit
 }
 
+/**
+ * Validate a form object and return a list of errors
+ * @param {object} form - The form data object to validate
+ * @param {string} form.nom - The user's last name
+ * @param {string} form.prenom - The user's first name
+ * @param {string} form.ville - The user's city
+ * @param {string} form.email - The user's email address
+ * @param {Date} form.date - The user's birthdate
+ * @param {string} form.code - The user's postal code
+ * @returns {object} An object containing error messages for each invalid field
+ */
 function formErrors(form) {
     let errors = {};
     try {
@@ -106,9 +119,9 @@ function formErrors(form) {
         errors.nom = e.message
     }
     try {
-        textIsValid(form.prennom)
+        textIsValid(form.prenom)
     } catch (e) {
-        errors.prennom = e.message
+        errors.prenom = e.message
     }
     try {
         textIsValid(form.ville)
@@ -136,5 +149,11 @@ function formErrors(form) {
 
 export {
     canSubmit,
-    formErrors
+    formErrors,
+    textIsValid,
+    dateIsValid,
+    emailIsValid,
+    calculateAge,
+    hasSpecialCharacters,
+    postalCodeisValid
 }

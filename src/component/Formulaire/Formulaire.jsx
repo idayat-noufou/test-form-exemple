@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
-import {canSubmit, formErrors} from "../validator/validator";
+import {canSubmit, formErrors} from "../../validator/validator.js";
 import {isEmpty} from "lodash";
+import toast from "react-hot-toast";
+import {FormError} from "../FormError/FormError.jsx";
 
 export const Formulaire = () => {
     let [formFields,setFormField] = useState({
@@ -12,10 +14,10 @@ export const Formulaire = () => {
         code:null,
     })
     let [btnCanSubmit, setBtnCanSubmit] = useState(false);
+    let [errors, setErrors] = useState([]);
     useEffect(() => {
         setBtnCanSubmit(canSubmit(formFields))
     }, [formFields]);
-    // console.log(btnCanSubmit)
 
     return (
         <form className={"bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6 "} onSubmit={
@@ -23,14 +25,19 @@ export const Formulaire = () => {
                 e.preventDefault();
                 const errors = formErrors(formFields);
                 if (!isEmpty((errors))){
-                    console.error(errors)
+                    setErrors(errors)
+                    toast.error('erreur veuillez ressaissir les éléments')
                     return false;
                 }
-                console.log('save')
+                let saved = localStorage.length;
+                localStorage.setItem("personne "+saved, JSON.stringify(formFields));
+                toast.success('les informations ont bien été enregistré');
         }}>
             <div className={"grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5"}>
-                <label>nom</label>
+                <label htmlFor="nom">nom</label>
                 <input className={"h-10 border mt-1 rounded px-4 w-full bg-gray-50"} type="text"
+                       id="nom"
+                       data-testid="nom"
                        name="nom"
                        onInput={(v) => {
                            let change = {nom: v.target.value};
@@ -39,10 +46,13 @@ export const Formulaire = () => {
                                ...change
                            }))
                        }}/>
+                <FormError error={errors.nom}></FormError>
             </div>
             <div className={"grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5"}>
-                <label>prénom</label>
+                <label htmlFor="prenom">prénom</label>
                 <input className={"h-10 border mt-1 rounded px-4 w-full bg-gray-50"} type="text"
+                       id="prenom"
+                       data-testid="prenom"
                        name="prenom"
                        onInput={(v) => {
                            let change = {prenom: v.target.value};
@@ -51,10 +61,13 @@ export const Formulaire = () => {
                                ...change
                            }))
                        }}/>
+                <FormError error={errors.prenom}></FormError>
             </div>
             <div className={"grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5"}>
-                <label>email</label>
+                <label htmlFor="email">email</label>
                 <input className={"h-10 border mt-1 rounded px-4 w-full bg-gray-50"} type="email"
+                       id="email"
+                       data-testid="email"
                        name="email"
                        onInput={(v) => {
                            let change = {email: v.target.value};
@@ -63,10 +76,13 @@ export const Formulaire = () => {
                                ...change
                            }))
                        }}/>
+                <FormError error={errors.email}></FormError>
             </div>
             <div className={"grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5"}>
-                <label>date de naissance</label>
+                <label htmlFor="date">date de naissance</label>
                 <input className={"h-10 border mt-1 rounded px-4 w-full bg-gray-50"} type="date"
+                       id="date"
+                       data-testid="date"
                        name="date"
                        onInput={(v) => {
                            let change = {date: v.target.value};
@@ -75,10 +91,13 @@ export const Formulaire = () => {
                                ...change
                            }))
                        }}/>
+                <FormError error={errors.date}></FormError>
             </div>
             <div className={"grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5"}>
-                <label>ville</label>
+                <label htmlFor="ville">ville</label>
                 <input className={"h-10 border mt-1 rounded px-4 w-full bg-gray-50"} type="text"
+                       id="ville"
+                       data-testid="ville"
                        name="ville"
                        onInput={(v) => {
                            let change = {ville: v.target.value};
@@ -87,10 +106,13 @@ export const Formulaire = () => {
                                ...change
                            }))
                        }}/>
+                <FormError error={errors.ville}></FormError>
             </div>
             <div className={"grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5"}>
-                <label>code postal</label>
+                <label htmlFor="code">code postal</label>
                 <input className={"h-10 border mt-1 rounded px-4 w-full bg-gray-50"} type="text"
+                       id="code"
+                       data-testid="code"
                        name="code"
                        onInput={(v) => {
                            let change = {code: v.target.value};
@@ -99,6 +121,7 @@ export const Formulaire = () => {
                                ...change
                            }))
                        }}/>
+                <FormError error={errors.code}></FormError>
             </div>
             <button
                 className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-blue-200"}
