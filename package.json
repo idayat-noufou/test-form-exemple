@@ -1,53 +1,5 @@
 {
   "name": "test-form-exemple",
-<<<<<<< HEAD
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "lodash": "^4.17.21",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test  --coverage --watchAll=false\"",
-    "eject": "react-scripts eject",
-    "jsdoc": "jsdoc -c ./jsdoc.config.json -r -d ./docs",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.25.8",
-    "babel-jest": "^29.7.0",
-    "gh-pages": "^6.2.0",
-    "jsdoc": "^4.0.3",
-    "react-test-renderer": "^18.3.1",
-    "tailwindcss": "^3.4.13"
-=======
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -91,6 +43,5 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "vite": "^5.4.10"
->>>>>>> a1a4d19 (reprise projets)
   }
 }
