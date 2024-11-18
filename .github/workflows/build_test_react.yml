@@ -49,6 +49,13 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
+      - name: Generate JSDoc
+        run: npm run jsdoc
+
+      - name: deploy JSDoc
+        run: |
+          cp -r docs/* dist/
+
   deploy:
     needs: build_test
     runs-on: ubuntu-latest
