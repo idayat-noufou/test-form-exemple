@@ -43,6 +43,11 @@ jobs:
         with:
           path: dist
           if-no-files-found: error
+          
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   deploy:
     needs: build_test
@@ -57,7 +62,3 @@ jobs:
         uses: actions/deploy-pages@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload results to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
