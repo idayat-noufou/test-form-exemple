@@ -9,7 +9,7 @@
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives ",
     "preview": "vite preview",
-    "test": "jest --watchAll",
+    "test": "jest",
     "cov": "jest --coverage --collectCoverageFrom='src/**/*.{js,jsx}'",
     "predeploy" : "npm run build",
     "deploy" : "gh-pages -d dist"
