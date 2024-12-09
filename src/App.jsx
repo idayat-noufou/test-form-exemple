@@ -1,30 +1,25 @@
-import {Formulaire} from "./component/Formulaire/Formulaire.jsx";
-// import {RegisteredList} from "./component/RegisteredList";
-import './App.css'
-import {Toaster} from "react-hot-toast";
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Formulaire } from './component/Formulaire/Formulaire.jsx';
+import { RegisteredList } from './component/RegisteredList/RegisteredList.jsx';
+import { Toaster } from 'react-hot-toast';
+import './App.css';
 
 function App() {
-  return (
-    <>
-        <Toaster />
-      <div className="App min-h-screen p-6 bg-gray-100">
-            {/*nom, prénom, mail, date de naissance, ville, code postal et un bouton de sauvegarde*/}
-            <div data-testid="inscription">
-                <h2>Inscription</h2><br/>
-                <div className={"container max-w-screen-lg mx-auto"}>
-                    <Formulaire/>
-                </div>
+    return (
+        <Router>
+            <Toaster />
+            <div className="App min-h-screen p-6 bg-gray-100">
+                <nav className="mb-6">
+                    <Link to="/" className="mr-4 text-blue-500">Inscription</Link>
+                    <Link to="/list" className="text-blue-500">Liste des inscrits</Link>
+                </nav>
+                <Routes>
+                    <Route path="/" element={<Formulaire />} />
+                    <Route path="/list" element={<RegisteredList />} />
+                </Routes>
             </div>
-            {/*<div>*/}
-            {/*    <h2>Liste inscrits</h2><br/>*/}
-            {/*    <div className={"container max-w-screen-lg mx-auto"}>*/}
-            {/*        <RegisteredList/>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-        </div>
+        </Router>
     );
-    </>
-  )
 }
 
-export default App
+export default App;
