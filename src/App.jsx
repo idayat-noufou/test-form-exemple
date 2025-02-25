@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Formulaire } from './component/Formulaire/Formulaire.jsx';
 import { RegisteredList } from './component/RegisteredList/RegisteredList.jsx';
 import { LoginPage } from './component/Login/LoginPage.jsx';
-import { Navbar } from './component/Navbar/Navbar.jsx';
+import { Navbar } from './component/NavBar/NavBar.jsx';
 import { Toaster } from 'react-hot-toast';
 import './App.css';
 
