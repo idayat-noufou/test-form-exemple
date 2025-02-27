@@ -8,7 +8,7 @@ import {
     canSubmit,
     formErrors
 } from './validator';
-import {jest} from "@jest/globals";
+import { vi } from "vitest";
 
 
 /**
@@ -164,7 +164,7 @@ function mockDate() {
 
 beforeAll(() => {
     // Lock Time
-    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 2099601663000); //date = 14 juillet 2036
+    dateNowSpy = vi.spyOn(Date, 'now').mockImplementation(() => 2099601663000); //date = 14 juillet 2036
 });
 
 afterAll(() => {

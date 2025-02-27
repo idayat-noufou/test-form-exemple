@@ -18,7 +18,7 @@ export const LoginPage = ({ setIsAuthenticated }) => {
             localStorage.setItem('token', response.data.token);
             setIsAuthenticated(true); // ✅ Met à jour l’état d’authentification
             toast.success('Connexion réussie ! Bienvenue 👋');
-            navigate('/list');
+            navigate('/test-form-exemple/list');
         } catch (err) {
             setError('Invalid credentials. Please try again.');
             toast.error('Erreur de connexion. Vérifiez vos identifiants.');

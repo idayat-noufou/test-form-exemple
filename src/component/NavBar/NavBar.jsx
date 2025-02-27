@@ -15,9 +15,9 @@ export const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
     return (
         <nav className="mb-6 flex justify-between">
             <div>
-                <Link to="/" className="mr-4 text-blue-500">Inscription</Link>
-                <Link to="/list" className="text-blue-500">Liste des inscrits</Link>
-                {!isAuthenticated && <Link to="/login" className="ml-4 text-blue-500">Connexion</Link>}
+                <Link to="test-form-exemple/form" className="mr-4 text-blue-500">Inscription</Link>
+                <Link to="test-form-exemple/list" className="text-blue-500">Liste des inscrits</Link>
+                {!isAuthenticated && <Link to="test-form-exemple/login" className="ml-4 text-blue-500">Connexion</Link>}
             </div>
             {isAuthenticated && (
                 <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded">
