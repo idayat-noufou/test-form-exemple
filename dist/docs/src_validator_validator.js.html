@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/validator/validator.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/validator/validator.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {isEmpty, forEach} from "lodash";
+import log from "eslint-plugin-react/lib/util/log.js";
+
+/**
+ * Verify if text field is valid
+ * @param {string} text
+ * @returns {boolean}
+ */
+function textIsValid(text) {
+    if (isEmpty(text)) {
+        throw new Error('value is empty')
+    }
+    const char = hasSpecialCharacters(text)
+    if (char) {
+        throw new Error(char + 'is not a permitted character')
+    }
+    return true
+}
+
+/**
+ * return first special character or number of a string except accents, umlauts, hyphens
+ * @param text
+ * @returns {RegExpExecArray}
+ */
+function hasSpecialCharacters(text) {
+    const format = /[ `!@#$%^&amp;*()+=\[\]{};':"\\|,.&lt;>\/?~0-9]/;
+    return format.exec(text)
+}
+
+/**
+ * Calculate a person age
+ * @param {string} date bithdate
+ * @returns {number} The age in years
+ */
+function calculateAge(date) {
+    if (isEmpty(date)) {
+        throw new Error("value is empty");
+    }
+    date = new Date(date)
+    if (!(date instanceof Date) || isNaN(date)) {
+        throw new Error("date format not valid");
+    }
+    let dateDiff = new Date(Date.now() - date.getTime());
+    return Math.abs(dateDiff.getUTCFullYear() - 1970)
+}
+
+/**
+ * verify if calculated age from date is over 18
+ * @param date
+ * @returns {boolean}
+ */
+function dateIsValid(date) {
+    try {
+        const age = calculateAge(date)
+        if (age &lt; 18) {
+            throw new Error("age must be over 18")
+        }
+        return true
+    } catch (e) {
+        throw e;
+    }
+}
+
+/**
+ * verify if email is valid
+ * @param {string} email
+ * @returns {boolean}
+ */
+function emailIsValid(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        throw new Error("email is not valid")
+    }
+    return true
+}
+
+/**
+ * verify if code is a valid France postal code
+ * @param {string} code
+ */
+function postalCodeisValid(code) {
+    const format = /^[0-9]{5}$/;
+    if (!format.test(code)) {
+        throw new Error("postal code is not valid")
+    }
+}
+
+/**
+ * verify if all value of an object are not null
+ * @param {object} form
+ */
+function canSubmit(form) {
+    let submit = true;
+    forEach(form, (elem) => {
+        if (isEmpty(elem)) {
+            submit = false
+            return submit
+        }
+    })
+    return submit
+}
+
+/**
+ * Validate a form object and return a list of errors
+ * @param {object} form - The form data object to validate
+ * @param {string} form.nom - The user's last name
+ * @param {string} form.prenom - The user's first name
+ * @param {string} form.ville - The user's city
+ * @param {string} form.email - The user's email address
+ * @param {Date} form.date - The user's birthdate
+ * @param {string} form.code - The user's postal code
+ * @returns {object} An object containing error messages for each invalid field
+ */
+function formErrors(form) {
+    let errors = {};
+    try {
+        textIsValid(form.nom)
+    } catch (e) {
+        errors.nom = e.message
+    }
+    try {
+        textIsValid(form.prenom)
+    } catch (e) {
+        errors.prenom = e.message
+    }
+    try {
+        textIsValid(form.ville)
+    } catch (e) {
+        errors.ville = e.message
+    }
+    try {
+        emailIsValid(form.email)
+    } catch (e) {
+        errors.email = e.message
+    }
+    try {
+        dateIsValid(form.date)
+    } catch (e) {
+        errors.date = e.message
+    }
+    try {
+        postalCodeisValid(form.code)
+    } catch (e) {
+        errors.code = e.message
+    }
+
+    return errors;
+}
+
+export {
+    canSubmit,
+    formErrors,
+    textIsValid,
+    dateIsValid,
+    emailIsValid,
+    calculateAge,
+    hasSpecialCharacters,
+    postalCodeisValid
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#F2">F2</a></li><li><a href="global.html#Fu">Fu</a></li><li><a href="global.html#N2">N2</a></li><li><a href="global.html#calculateAge">calculateAge</a></li><li><a href="global.html#canSubmit">canSubmit</a></li><li><a href="global.html#dateIsValid">dateIsValid</a></li><li><a href="global.html#emailIsValid">emailIsValid</a></li><li><a href="global.html#formErrors">formErrors</a></li><li><a href="global.html#hasSpecialCharacters">hasSpecialCharacters</a></li><li><a href="global.html#postalCodeisValid">postalCodeisValid</a></li><li><a href="global.html#textIsValid">textIsValid</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Feb 06 2025 14:48:58 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
