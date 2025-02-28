@@ -25,7 +25,7 @@ describe('Inscription form testing', () => {
         cy.get('input[name="code"]').type('75001');
 
         cy.get('button[type="submit"]').should('be.enabled').click();
-        
+
         cy.contains('Les informations ont bien été enregistrées').should('be.visible');
     });
 
