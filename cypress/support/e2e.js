@@ -15,3 +15,10 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+
+Cypress.Commands.overwrite('log', (originalFn, message) => {
+  if (Cypress.browser.isHeadless) {
+    cy.task('log', message);
+  }
+  originalFn(message);
+});

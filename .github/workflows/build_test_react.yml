@@ -33,6 +33,18 @@ jobs:
           npm run build --if-present          
           npm test 
 
+      - name: Créer un fichier .env.local
+        run: echo "VITE_API_URL=http://localhost:5001/api" > .env.local
+
+      - name: Build the stack
+        run: docker compose -f docker-compose.yaml up -d
+
+      - name: Run e2e tests with cypress
+        uses: cypress-io/github-action@v6
+
+      - name: Stop the stack
+        run: docker compose -f docker-compose.yaml down
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3

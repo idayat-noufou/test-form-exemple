@@ -5,7 +5,7 @@
   "homepage": "https://idayat-noufou.github.io/test-form-exemple/",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives ",
     "preview": "vite preview",

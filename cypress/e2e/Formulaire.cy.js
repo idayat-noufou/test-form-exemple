@@ -14,7 +14,8 @@ describe('Inscription form testing', () => {
     });
 
     it('form is valid and form submit is ok', () => {
-        cy.intercept('POST', `${import.meta.env.VITE_API_URL}/users/create`, { statusCode: 201, ok: true });
+        cy.intercept('POST', `${import.meta.env.VITE_API_URL}/users/create`,
+            { statusCode: 201, ok: true });
 
         cy.get('input[name="nom"]').type('TestN');
         cy.get('input[name="prenom"]').type('TestP');
@@ -24,7 +25,7 @@ describe('Inscription form testing', () => {
         cy.get('input[name="code"]').type('75001');
 
         cy.get('button[type="submit"]').should('be.enabled').click();
-
+        
         cy.contains('Les informations ont bien été enregistrées').should('be.visible');
     });
 
