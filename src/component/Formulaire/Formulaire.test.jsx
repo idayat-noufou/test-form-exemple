@@ -1,12 +1,15 @@
+// Formulaire.test.jsx
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Formulaire } from "./Formulaire";
 import toast from "react-hot-toast";
 import "whatwg-fetch";
 import { vi } from "vitest";
 
-
 vi.mock("react-hot-toast", () => ({
-  default: vi.fn(),
+  default: {
+    error: vi.fn(),
+    success: vi.fn(),
+  },
   error: vi.fn(),
   success: vi.fn(),
 }));
@@ -42,50 +45,82 @@ describe("Formulaire component", () => {
     expect(submitButton).toBeEnabled();
   });
 
-  // it("formulaire errors", async () => {
-  //   render(<Formulaire />);
-  //
-  //   fireEvent.input(screen.getByTestId("nom"), { target: { value: "" } });
-  //   fireEvent.input(screen.getByTestId("prenom"), { target: { value: "Invalid!" } });
-  //   fireEvent.input(screen.getByTestId("email"), { target: { value: "invalid-email" } });
-  //   fireEvent.input(screen.getByTestId("date"), { target: { value: "2020-01-01" } });
-  //   fireEvent.input(screen.getByTestId("code"), { target: { value: "123" } });
-  //
-  //   const submitButton = screen.getByRole("button", { name: /sauvegarder/i });
-  //   fireEvent.click(submitButton);
-  //
-  //   await waitFor(() => {
-  //     expect(toast.error);
-  //   });
-  //
-  //   // expect(screen.getByText('value is empty')).toBeInTheDocument();
-  //   // expect(screen.getByText('!is not a permitted character')).toBeInTheDocument();
-  //   // expect(screen.getByText('email is not valid')).toBeInTheDocument();
-  //   // expect(screen.getByText('age must be over 18')).toBeInTheDocument();
-  //   // expect(screen.getByText('postal code is not valid')).toBeInTheDocument();
-  // });
+  it("saves form and shows success message", async () => {
+    global.fetch = vi.fn().mockResolvedValue({ ok: true });
+    render(<Formulaire />);
 
-  // it("saves form in localStorage and shows success message", async () => {
-  //   render(<Formulaire />);
-  //
-  //   fireEvent.input(screen.getByTestId("nom"), { target: { value: "Noufou" } });
-  //   fireEvent.input(screen.getByTestId("prenom"), { target: { value: "Idayat" } });
-  //   fireEvent.input(screen.getByTestId("email"), { target: { value: "nouf.ida@example.com" } });
-  //   fireEvent.input(screen.getByTestId("date"),  { target: { value: "2000-01-01" } });
-  //   fireEvent.input(screen.getByTestId("ville"), { target: { value: "Paris" } });
-  //   fireEvent.input(screen.getByTestId("code"),  { target: { value: "75001" } });
-  //
-  //   const submitButton = screen.getByRole("button", { name: /sauvegarder/i });
-  //   fireEvent.click(submitButton);
-  //
-  //
-  //   // await waitFor(() => {
-  //   //   expect(toast.success).toHaveBeenCalledWith("Les informations ont bien été enregistrées");
-  //   // });
-  //
-  //   // const savedData = JSON.parse(localStorage.getItem("personne 0"));
-  //   // expect(savedData.nom).toContain("Noufou");
-  //   // expect(savedData.prenom).toContain("Idayat");
-  //   // expect(savedData.email).toContain("nouf.ida@example.com");
-  // });
+    fireEvent.input(screen.getByTestId("nom"), { target: { value: "Noufou" } });
+    fireEvent.input(screen.getByTestId("prenom"), { target: { value: "Idayat" } });
+    fireEvent.input(screen.getByTestId("email"), { target: { value: "nouf.ida@example.com" } });
+    fireEvent.input(screen.getByTestId("date"), { target: { value: "2000-01-01" } });
+    fireEvent.input(screen.getByTestId("ville"), { target: { value: "Paris" } });
+    fireEvent.input(screen.getByTestId("code"), { target: { value: "75001" } });
+
+    fireEvent.click(screen.getByRole("button", { name: /sauvegarder/i }));
+
+    await waitFor(() => {
+      expect(toast.success).toHaveBeenCalledWith("Les informations ont bien été enregistrées");
+    });
+  });
+
+  it("shows saving error", async () => {
+    global.fetch = vi.fn().mockResolvedValue({ ok: false });
+    render(<Formulaire />);
+
+    fireEvent.input(screen.getByTestId("nom"), { target: { value: "Noufou" } });
+    fireEvent.input(screen.getByTestId("prenom"), { target: { value: "Idayat" } });
+    fireEvent.input(screen.getByTestId("email"), { target: { value: "nouf.ida@example.com" } });
+    fireEvent.input(screen.getByTestId("date"), { target: { value: "2000-01-01" } });
+    fireEvent.input(screen.getByTestId("ville"), { target: { value: "Paris" } });
+    fireEvent.input(screen.getByTestId("code"), { target: { value: "75001" } });
+
+    fireEvent.click(screen.getByRole("button", { name: /sauvegarder/i }));
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith("Erreur lors de l'enregistrement de l'utilisateur");
+    });
+  });
+
+  it("shows network error", async () => {
+    global.fetch = vi.fn().mockRejectedValue(new Error("Network Error"));
+    render(<Formulaire />);
+
+    fireEvent.input(screen.getByTestId("nom"), { target: { value: "Noufou" } });
+    fireEvent.input(screen.getByTestId("prenom"), { target: { value: "Idayat" } });
+    fireEvent.input(screen.getByTestId("email"), { target: { value: "nouf.ida@example.com" } });
+    fireEvent.input(screen.getByTestId("date"), { target: { value: "2000-01-01" } });
+    fireEvent.input(screen.getByTestId("ville"), { target: { value: "Paris" } });
+    fireEvent.input(screen.getByTestId("code"), { target: { value: "75001" } });
+
+    fireEvent.click(screen.getByRole("button", { name: /sauvegarder/i }));
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith("Erreur réseau, veuillez réessayer");
+    });
+  });
+
+  it("shows formulaire errors", async () => {
+    render(<Formulaire />);
+
+    fireEvent.input(screen.getByTestId("nom"), { target: { value: "Invalid!" } });
+    fireEvent.input(screen.getByTestId("prenom"), { target: { value: "Invalid!" } });
+    fireEvent.input(screen.getByTestId("email"), { target: { value: "example@example" } });
+    fireEvent.input(screen.getByTestId("date"), { target: { value: "2000-01-01" } });
+    fireEvent.input(screen.getByTestId("ville"), { target: { value: "Paris" } });
+    fireEvent.input(screen.getByTestId("code"), { target: { value: "75001" } });
+
+    // fireEvent.input(screen.getByTestId("nom"), { target: { value: "Invalid!" } });
+    // fireEvent.input(screen.getByTestId("prenom"), { target: { value: "Invalid!" } });
+    // fireEvent.input(screen.getByTestId("email"), { target: { value: "invalid-email@ee" } });
+    // fireEvent.input(screen.getByTestId("date"), { target: { value: "2020-01-01" } });
+    // fireEvent.input(screen.getByTestId("code"), { target: { value: "123" } });
+
+    const submitButton = screen.getByRole("button", { name: /sauvegarder/i });
+    expect(submitButton).toBeEnabled();
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith("Erreur, veuillez ressaisir les éléments");
+    });
+  });
 });

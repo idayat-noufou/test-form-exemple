@@ -4,6 +4,6 @@ describe('template spec', () => {
   })
 
   it('get env variabes', () => {
-    console.log(import.meta.env);
+    cy.log(import.meta.env);
   })
 })
