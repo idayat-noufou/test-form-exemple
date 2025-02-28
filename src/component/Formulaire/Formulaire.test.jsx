@@ -106,14 +106,8 @@ describe("Formulaire component", () => {
     fireEvent.input(screen.getByTestId("prenom"), { target: { value: "Invalid!" } });
     fireEvent.input(screen.getByTestId("email"), { target: { value: "example@example" } });
     fireEvent.input(screen.getByTestId("date"), { target: { value: "2000-01-01" } });
-    fireEvent.input(screen.getByTestId("ville"), { target: { value: "Paris" } });
-    fireEvent.input(screen.getByTestId("code"), { target: { value: "75001" } });
-
-    // fireEvent.input(screen.getByTestId("nom"), { target: { value: "Invalid!" } });
-    // fireEvent.input(screen.getByTestId("prenom"), { target: { value: "Invalid!" } });
-    // fireEvent.input(screen.getByTestId("email"), { target: { value: "invalid-email@ee" } });
-    // fireEvent.input(screen.getByTestId("date"), { target: { value: "2020-01-01" } });
-    // fireEvent.input(screen.getByTestId("code"), { target: { value: "123" } });
+    fireEvent.input(screen.getByTestId("ville"), { target: { value: "Paris?" } });
+    fireEvent.input(screen.getByTestId("code"), { target: { value: "75001l" } });
 
     const submitButton = screen.getByRole("button", { name: /sauvegarder/i });
     expect(submitButton).toBeEnabled();

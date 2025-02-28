@@ -34,6 +34,7 @@ export const LoginPage = ({ setIsAuthenticated }) => {
                     <label htmlFor="email" className="block font-medium">Email</label>
                     <input
                         id="email"
+                        data-testid="email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -45,6 +46,7 @@ export const LoginPage = ({ setIsAuthenticated }) => {
                     <label htmlFor="password" className="block font-medium">Password</label>
                     <input
                         id="password"
+                        data-testid="password"
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
