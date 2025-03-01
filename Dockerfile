@@ -1,7 +1,6 @@
 FROM node:20 AS build
 
 ARG APP_HOME=/app
-ENV VITE_API_URL=http://localhost:5001/api
 
 WORKDIR $APP_HOME
 

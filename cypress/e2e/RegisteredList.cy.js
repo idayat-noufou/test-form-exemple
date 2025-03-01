@@ -8,13 +8,13 @@ describe('RegisteredList Page', () => {
     });
 
     it('affiche un message si aucun inscrit', () => {
-        cy.intercept('GET', 'http://localhost:5001/api/users', { body: [] }).as('getUsers');
+        cy.intercept('GET', `${import.meta.env.VITE_API_URL}/users`, { body: [] }).as('getUsers');
         cy.wait('@getUsers');
         cy.contains('Aucun inscrit pour le moment.').should('be.visible');
     });
 
     it('affiche la liste des inscrits avec des données valides', () => {
-        cy.intercept('GET', 'http://localhost:5001/api/users', {
+        cy.intercept('GET', `${import.meta.env.VITE_API_URL}/users`, {
             body: [
                 { _id: '1', nom: 'Doe', prenom: 'John', email: 'john.doe@example.com', ville: 'Paris', code: '75001' }
             ]
