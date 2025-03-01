@@ -1,6 +1,8 @@
 name: Full Test and Deployment
 
 on:
+  repository_dispatch:
+    types : [dispatch-event]
   workflow_dispatch:
 
 permissions:
